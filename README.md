@@ -1,73 +1,221 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Indice
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- [Sobre](#sobre)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Dependências](#dependências)
+- [Instalando o docker](#instalando-o-docker)
+- [Como baixar o projeto](#como-baixar-o-projeto)
+- [Rodando ambiente com Docker](#rodando-ambiente-com-docker)
+- [Endpoints](#endpoints)
+- [Solicitando tokens de acesso [/auth]](#solicitando-tokens-de-acesso-auth)
+- [Customers [/customers]](#customers-customers)
+- [Novo Customer[POST]](#novo-customerpost)
+- [Detalhar [GET /customers/:id]](#detalhar-get-customersid)
+- [Atualizar [PATCH /customers/:id]](#atualizar-patch-customersid)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Sobre
 
-## Description
+O projeto **Vita Nestjs** é uma api criada à fins de teste de criação de "Customers" além de gerar tokens através do servidor de autenticação da Vitta.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Installation
+## Tecnologias utilizadas
 
-```bash
-$ npm install
-```
+O projeto foi desenvolvido utilizando as seguintes tecnologias
 
-## Running the app
+- [NestJS](https://nestjs.com)
+- [Redis](https://redis.io)
+- [Axios](https://github.com/axios/axios)
+- [Docker](https://www.docker.com)
+
+---
+
+## Dependências
 
 ```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+    - Docker
+    - WSL (para ambientes Windows)
 ```
 
-## Test
+## Instalando o Docker
+
+O **Docker** pode ser baixado através do [https://www.docker.com](https://www.docker.com). Caso esteja utilizando ambiente Windows, é necessário instalar o WSL (Windows Subsystem for Linux) através do [link](https://docs.microsoft.com/pt-br/windows/wsl/install).
+
+---
+
+## Como baixar o projeto
 
 ```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
+    # Clonar o repositório
+    $ git clone https://github.com/caiolk/vitta-nestjs
 
-# test coverage
-$ npm run test:cov
+    # Entrar no diretório
+    $ cd vitta-nestjs
+
 ```
+## Rodando ambiente com Docker
 
-## Support
+Acesse o diretório em que o repositório foi clonado através do terminal e
+execute os comandos:
+ - `docker-compose build` para compilar imagens, criar containers etc.
+ - `docker-compose up` para inicializar os contâiners.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+** Observação: Certifique que no repositório contenha os arquivos `Dockerfile` e `docker-compose.yml`
+---
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Endpoints
 
-## License
+## Solicitando tokens de acesso [/auth]
 
-Nest is [MIT licensed](LICENSE).
+### Utilizando o código de acesso [POST]
+
+| Parâmetro | Descrição |
+|---|---|
+| `grant_type` | Informar: `authorization_code` |
+| `client_id` | Código de identificação da aplicação no sistema. |
+| `client_secret` | `client_secret` da aplicação no sistema. |
+| `username` | `username` da aplicação no sistema. |
+| `password` | `password` da aplicação no sistema. |
+| `scope` | Código recebido pela autorização do usuário. |
+
++ Request (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "grant_type": "client_credentials",
+                "client_id": "e70654d7f568d0",
+                "client_secret": "156762a28c007a64ff",
+                "username" : "usuario@usuario.com",
+                "password" : "123456",
+                "scope" : "openid"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "access_token": "[access_token]",
+                "token_type": "Bearer",
+                "expires_in": 300,
+                "refresh_expires_in": 0,
+                "token_type": "[token_type]",
+                "id_token" : "[id_token]",
+                "not-before-policy" : 0,
+                "scope" : "[scope]"
+
+            }
+
+# Customers [/customers]
+
+### Novo Customer[POST]
+
++ Attributes (object)
+
+    + name: nome do customer (string, required)
+    + document: CPF/CNPJ do customer (string, required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authorization: Bearer [access_token]
+
+    + Body
+
+            {
+              "name": "Customer 1",
+              "document": "Document 1",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "status": true,
+                "message": "Customer salvo com sucesso.",
+                "customerData": {
+                    "id": "7fab907d-1829-4f94-b585-a8bd5e6616a8",
+                    "name": "Customer 1",
+                    "document": "Document 1" 
+                }
+            }
+
+### Detalhar [GET /customers/:id]
+
++ Parameters
+    + id (required, string) ... id do contato (formato UUID V4)
+  
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authorization: Bearer [access_token]
+
++ Response 200 (application/json)
+  Todos os dados do customer
+    + Body
+
+            {
+                "id": "a88d17ef-f472-4e10-9836-50790e28a6aa",
+                "name": "Customer 1",
+                "document": "Document 1"
+            }
+
++ Response 404 (application/json)
+  Quando o registro não for encontrado no sistema.
+    + Headers
+
+            X-RateLimit-Limit: 60
+            X-RateLimit-Remaining: 59
+
+    + Body
+
+            {
+              "statusCode": 404,
+              "message": "Customer não encontrado",
+              "error": "Not Found"
+            }
+
+### Atualizar [PATCH /customers/:id]
+
++ Request (application/x-www-form-urlencoded)
+
+  + Headers
+
+            Authorization: Bearer [access_token]
+
+  + Parameters
+      + id (required, string) ... id do contato (formato UUID V4)
+  + Body
+
+            {
+              "name": "Customer 1",
+              "document": "Document 1",
+            }
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "name": "Customer 1",
+              "document": "Document 1",
+            }
+
++ Response 404 (application/json)
+  Quando o registro não for encontrado no sistema.
+
+    + Body
+
+            {
+              "statusCode": 404,
+              "message": "Customer não encontrado",
+              "error": "Not Found"
+            }
+
+Desenvolvido por Caio Kozano.
