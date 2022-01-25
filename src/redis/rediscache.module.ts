@@ -7,7 +7,8 @@ import { config } from 'dotenv';
   imports: [RedisModule.forRootAsync({
     useFactory: () => ({
       config: { 
-        url: `redis://localhost:6379`
+        host: 'redis',
+        port: 6379
       },
     }),
   })],
